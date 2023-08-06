@@ -1,26 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Container} from 'react-bootstrap';
 
 // Components
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Rammus from './champions/instances/tank/Rammus';
 
-const rammus = new Rammus();
+//import socket from './services/socket';
+import socketIOClient from 'socket.io-client';
 
 function App() {
+  useEffect(() => {
+    const socket = socketIOClient(process.env.REACT_APP_API_URL!);
+
+    socket.on('connect', () => {
+      console.log('Socket connected');
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <Container className="App">
       <Header />
-      <ul>
-        <li>Name: {rammus.name}</li>
-        <li>HP: {rammus.hp}</li>
-        <li>MP: {rammus.mp}</li>
-        <li>AD: {rammus.ad}</li>
-        <li>AP: {rammus.ap}</li>
-        <li>AR: {rammus.ar}</li>
-        <li>MR: {rammus.mr}</li>
-      </ul>
+
       <Footer />
     </Container>
   );
