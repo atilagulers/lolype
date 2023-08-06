@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container} from 'react-bootstrap';
 
 // Components
@@ -9,21 +9,40 @@ import Footer from './components/Footer';
 import socketIOClient from 'socket.io-client';
 
 function App() {
-  useEffect(() => {
-    const socket = socketIOClient(process.env.REACT_APP_API_URL!);
+  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
+  const [inputValue, setInputValue] = useState('');
 
-    socket.on('connect', () => {
+  useEffect(() => {
+    const newSocket = socketIOClient(process.env.REACT_APP_API_URL!);
+    setSocket(newSocket);
+
+    newSocket.on('connect', () => {
       console.log('Socket connected');
     });
 
     return () => {
-      socket.disconnect();
+      newSocket.disconnect();
     };
   }, []);
+
+  //socket.on('receive-message', (message) => {
+  //  console.log(message);
+  //});
+
+  function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputValue(e.target.value);
+  }
+
+  function handleClickSend() {
+    socket.emit('send-message', inputValue);
+  }
 
   return (
     <Container className="App">
       <Header />
+
+      <input type="text" onChange={handleChangeInput} />
+      <button onClick={handleClickSend}>Send</button>
 
       <Footer />
     </Container>
