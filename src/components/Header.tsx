@@ -1,8 +1,10 @@
+import React from 'react';
 import {Container} from 'react-bootstrap';
 
 function Header() {
   return (
     <Container
+      className="mt-5"
       style={{
         display: 'flex',
         justifyContent: 'center',

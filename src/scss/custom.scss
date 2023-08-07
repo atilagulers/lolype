@@ -1,0 +1,18 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+
+$font-family-base: 'Source Sans Pro', sans-serif !important;
+
+// Colors
+$custom-color-red: #785a28;
+$custom-color-black: #0a1428;
+$custom-color-light-black: #091428;
+$custom-colors: (
+  'primary': $custom-color-red,
+  'dark': $custom-color-black,
+  'light-dark': $custom-color-light-black,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import '../../node_modules/bootstrap/scss/bootstrap';

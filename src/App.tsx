@@ -1,52 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Container} from 'react-bootstrap';
+
+// Pages
+import Home from './Pages/Home/Home';
 
 // Components
 import Header from './components/Header';
 import Footer from './components/Footer';
-
-//import socket from './services/socket';
-import socketIOClient from 'socket.io-client';
+import {AppProvider} from './contexts/AppContext';
 
 function App() {
-  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
-  const [inputValue, setInputValue] = useState('');
-
-  useEffect(() => {
-    const newSocket = socketIOClient(process.env.REACT_APP_API_URL!);
-    setSocket(newSocket);
-
-    newSocket.on('connect', () => {
-      console.log('Socket connected');
-    });
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
-
-  //socket.on('receive-message', (message) => {
-  //  console.log(message);
-  //});
-
-  function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>) {
-    setInputValue(e.target.value);
-  }
-
-  function handleClickSend() {
-    socket.emit('send-message', inputValue);
-  }
-
   return (
-    <Container className="App">
-      <Header />
+    <AppProvider>
+      <Container className="App">
+        <Header />
 
-      <input type="text" onChange={handleChangeInput} />
-      <button onClick={handleClickSend}>Send</button>
+        <Home />
 
-      <Footer />
-    </Container>
+        <Footer />
+      </Container>
+    </AppProvider>
   );
 }
 
 export default App;
+
+// <input type="text" value={roomValue} onChange={handleChangeRoomInput} />
+
+//      <input type="text" value={inputValue} onChange={handleChangeInput} />
+
+//      <button onClick={handleClickSend}>Send</button>
+//      <h1>{socket?.id}</h1>
+//      <ul>
+//        {messages.map((msg: string, i) => (
+//          <li key={i}>{msg}</li>
+//        ))}
+//      </ul>

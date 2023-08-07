@@ -1,0 +1,10 @@
+@import '../../scss/colors.scss';
+
+.loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  color: $color-gold-2;
+}
