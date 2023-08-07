@@ -1,6 +1,7 @@
 import React, {FormEvent} from 'react';
 import {Form, Button} from 'react-bootstrap';
-import {useAppContext} from '../contexts/AppContext';
+import {useAppContext} from '../../contexts/AppContext';
+import './JoinForm.scss';
 
 function JoinForm() {
   const {socket} = useAppContext();
@@ -11,7 +12,7 @@ function JoinForm() {
   };
 
   return (
-    <Form onSubmit={handleSubmitJoin} className="join-room-form">
+    <Form onSubmit={handleSubmitJoin}>
       <Form.Group className="mb-3">
         <Form.Control type="text" placeholder="Room ID" />
       </Form.Group>
@@ -20,7 +21,7 @@ function JoinForm() {
         <Form.Control type="text" placeholder="Name" />
       </Form.Group>
 
-      <Button type="submit" className="btn-gradient-gold">
+      <Button variant="primary" type="submit" className="btn-gradient-gold">
         Join
       </Button>
     </Form>

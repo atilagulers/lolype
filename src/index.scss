@@ -16,6 +16,11 @@ code {
     monospace;
 }
 
+.btn {
+  font-size: x-large;
+}
+
 .btn-gradient-gold {
-  background-image: $gradient-gold !important; /* Kullanmak istediğiniz gradient değişkeni */
+  background-image: $gradient-gold !important;
+  border-color: $color-gold-7 !important;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container} from 'react-bootstrap';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 // Pages
 import Home from './Pages/Home/Home';
@@ -13,11 +14,13 @@ function App() {
   return (
     <AppProvider>
       <Container className="App">
-        <Header />
-
-        <Home />
-
-        <Footer />
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+          <Footer />
+        </Router>
       </Container>
     </AppProvider>
   );
