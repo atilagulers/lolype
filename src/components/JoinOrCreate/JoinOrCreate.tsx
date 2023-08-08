@@ -8,11 +8,11 @@ function JoinOrCreate() {
   const navigate = useNavigate();
 
   function handleClickJoin() {
-    navigate('join');
+    navigate('room/join');
   }
 
   function handleClickCreate() {
-    navigate('create');
+    navigate('room/create');
   }
 
   return (

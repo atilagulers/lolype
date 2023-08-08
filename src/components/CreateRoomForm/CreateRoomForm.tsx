@@ -1,14 +1,28 @@
-import React, {FormEvent} from 'react';
+import React, {useEffect, FormEvent} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import {useAppContext} from '../../contexts/AppContext';
-import './CreateGameForm.scss';
+import './CreateRoomForm.scss';
+import {useNavigate} from 'react-router-dom';
 
-function CreateGameForm() {
+function CreateRoomForm() {
   const {socket} = useAppContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    socket?.on('room-created', (roomId) => {
+      console.log(roomId + ' Odasina girdin');
+      navigate(`/room/${roomId}`);
+    });
+
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
 
   const handleSubmitCreate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(socket?.id);
+
+    socket?.emit('create-room');
   };
 
   return (
@@ -24,4 +38,4 @@ function CreateGameForm() {
   );
 }
 
-export default CreateGameForm;
+export default CreateRoomForm;

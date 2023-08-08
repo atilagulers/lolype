@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
-import './CreateGame.scss';
+import './CreateRoom.scss';
 import {Container} from 'react-bootstrap';
-import CreateGameForm from '../../components/CreateGameForm/CreateGameForm';
+import CreateRoomForm from '../../components/CreateRoomForm/CreateRoomForm';
 
-function CreateGame() {
+function CreateRoom() {
   return (
     <PageWrapper title={'Create Game'}>
       <Container className="create-game-container">
-        <CreateGameForm />
+        <CreateRoomForm />
       </Container>
     </PageWrapper>
   );
 }
 
-export default CreateGame;
+export default CreateRoom;

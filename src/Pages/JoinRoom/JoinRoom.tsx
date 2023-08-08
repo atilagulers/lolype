@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
-import JoinGameForm from '../../components/JoinGameForm/JoinGameForm';
-import './JoinGame.scss';
+import JoinRoomForm from '../../components/JoinRoomForm/JoinRoomForm';
+import './JoinRoom.scss';
 import {Container} from 'react-bootstrap';
 
-function JoinGame() {
+function JoinRoom() {
   return (
     <PageWrapper title={'Join Game'}>
       <Container className="join-game-container">
-        <JoinGameForm />
+        <JoinRoomForm />
       </Container>
     </PageWrapper>
   );
 }
 
-export default JoinGame;
+export default JoinRoom;
