@@ -24,3 +24,7 @@ code {
   background-image: $gradient-gold !important;
   border-color: $color-gold-7 !important;
 }
+
+.btn-gradient-gold:hover {
+  background-image: linear-gradient($color-gold-3, $color-gold-4) !important;
+}

@@ -1,9 +1,9 @@
 import React, {FormEvent} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import {useAppContext} from '../../contexts/AppContext';
-import './JoinForm.scss';
+import './JoinGameForm.scss';
 
-function JoinForm() {
+function JoinGameForm() {
   const {socket} = useAppContext();
 
   const handleSubmitJoin = (e: FormEvent<HTMLFormElement>) => {
@@ -28,4 +28,4 @@ function JoinForm() {
   );
 }
 
-export default JoinForm;
+export default JoinGameForm;
