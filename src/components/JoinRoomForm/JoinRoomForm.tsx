@@ -6,7 +6,7 @@ import {toast} from 'react-toastify';
 import {useNavigate} from 'react-router';
 
 function JoinRoomForm() {
-  const {socket} = useAppContext();
+  const {socket, player, setPlayer} = useAppContext();
   const navigate = useNavigate();
   const [roomID, setRoomID] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -33,6 +33,7 @@ function JoinRoomForm() {
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+    setPlayer({...player, name: e.target.value});
   };
 
   const handleValidation = () => {

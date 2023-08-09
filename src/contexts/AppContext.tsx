@@ -9,7 +9,7 @@ import {io, Socket} from 'socket.io-client';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 
 interface Player {
-  id: string;
+  //id: string;
   name: string;
 }
 
@@ -20,6 +20,8 @@ interface Room {
 
 interface AppContextType {
   socket: Socket | null;
+  player: Player | null;
+  setPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   room: Room | null;
   setRoom: React.Dispatch<React.SetStateAction<Room | null>>;
 }
@@ -44,6 +46,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({
   children,
 }: AppProviderProps) => {
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [player, setPlayer] = useState<Player | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
 
   useEffect(() => {
@@ -59,6 +62,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({
     socket,
     room,
     setRoom,
+    player,
+    setPlayer,
   };
 
   if (!socket) {
