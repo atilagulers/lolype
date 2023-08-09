@@ -13,12 +13,12 @@ function JoinRoomForm() {
   const [validationError, setValidationError] = useState<string>('');
 
   useEffect(() => {
-    socket?.on('joined-room', (roomId) => {
-      console.log(roomId + ' Odasina girdin');
-      navigate(`/room/${roomId}`);
+    socket?.on('joined-room', ({roomID, name}) => {
+      console.log(name + ', ' + roomID + ' Odasina girdin');
+      navigate(`/room/${roomID}`);
     });
 
-    socket?.on('room-not-found', (roomId) => {
+    socket?.on('room-not-found', (roomID, name) => {
       toast.error('Room not found');
     });
 
@@ -53,9 +53,8 @@ function JoinRoomForm() {
 
   const handleSubmitJoin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (handleValidation()) {
-      socket?.emit('join-room', roomID);
+      socket?.emit('join-room', {roomID, name});
     } else {
       toast.error(validationError);
     }

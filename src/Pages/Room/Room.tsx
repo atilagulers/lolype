@@ -9,7 +9,17 @@ function Room() {
   const navigate = useNavigate();
   const {id: roomId} = useParams();
 
-  useEffect(() => {});
+  useEffect(() => {
+    console.log('Room: Event handler registered');
+    socket?.on('joined-room', ({roomID, name}) => {
+      console.log('Room: joined-room event received');
+      console.log(name + ', ' + roomID + ' Odasina Girdi');
+    });
+
+    return () => {
+      //socket?.disconnect();
+    };
+  }, [socket]);
 
   return (
     <Row>
