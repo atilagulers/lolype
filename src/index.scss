@@ -28,3 +28,7 @@ code {
 .btn-gradient-gold:hover {
   background-image: linear-gradient($color-gold-3, $color-gold-4) !important;
 }
+
+.Toastify__close-button {
+  max-width: 10% !important;
+}

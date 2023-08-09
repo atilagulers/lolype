@@ -1,6 +1,8 @@
 import React from 'react';
 import {Container} from 'react-bootstrap';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {ToastContainer, Slide} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Pages
 import Home from './Pages/Home/Home';
@@ -30,6 +32,19 @@ function App() {
           <Footer />
         </Router>
       </Container>
+      <ToastContainer
+        position="top-center"
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        theme="dark"
+        autoClose={2000}
+        transition={Slide}
+      />
     </AppProvider>
   );
 }

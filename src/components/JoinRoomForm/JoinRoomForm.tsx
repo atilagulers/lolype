@@ -1,8 +1,9 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Form, Button} from 'react-bootstrap';
-import {useAppContext} from '../../contexts/AppContext';
 import './JoinRoomForm.scss';
-import {useNavigate} from 'react-router-dom';
+import {useAppContext} from '../../contexts/AppContext';
+import {toast} from 'react-toastify';
+import {useNavigate} from 'react-router';
 
 function JoinRoomForm() {
   const {socket} = useAppContext();
@@ -11,8 +12,22 @@ function JoinRoomForm() {
   const [name, setName] = useState<string>('');
   const [validationError, setValidationError] = useState<string>('');
 
+  useEffect(() => {
+    socket?.on('joined-room', (roomId) => {
+      console.log(roomId + ' Odasina girdin');
+      navigate(`/room/${roomId}`);
+    });
+
+    socket?.on('room-not-found', (roomId) => {
+      toast.error('Room not found');
+    });
+
+    return () => {
+      socket?.disconnect();
+    };
+  }, [socket]);
+
   const handleChangeRoomID = function (e: ChangeEvent<HTMLInputElement>) {
-    console.log(e.target.value!);
     setRoomID(e.target.value);
   };
 
@@ -35,41 +50,23 @@ function JoinRoomForm() {
     return true;
   };
 
-  useEffect(() => {
-    socket?.on('room-joined', (roomId) => {
-      console.log(roomId + ' Odasina girdin');
-      navigate(`/room/${roomId}`);
-    });
-
-    socket?.on('room-not-found', (roomId) => {
-      console.log('ROOM NOT FOUND');
-    });
-
-    return () => {
-      socket?.disconnect();
-    };
-  }, []);
-
-  const handleSubmitCreate = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    socket?.emit('create-room');
-  };
-
   const handleSubmitJoin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (handleValidation()) {
       socket?.emit('join-room', roomID);
     } else {
-      console.log(validationError);
+      toast.error(validationError);
     }
+
+    setRoomID('');
   };
 
   return (
     <Form onSubmit={handleSubmitJoin}>
       <Form.Group className="mb-3">
         <Form.Control
+          value={roomID}
           onChange={handleChangeRoomID}
           type="text"
           placeholder="Room ID"
