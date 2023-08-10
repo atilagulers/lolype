@@ -4,6 +4,7 @@ import './JoinRoomForm.scss';
 import {useAppContext} from '../../contexts/AppContext';
 import {toast} from 'react-toastify';
 import {useNavigate} from 'react-router';
+import {Player} from '../../interfaces/roomInterfaces';
 
 function JoinRoomForm() {
   const {socket, player, setPlayer} = useAppContext();
@@ -13,11 +14,6 @@ function JoinRoomForm() {
   const [validationError, setValidationError] = useState<string>('');
 
   useEffect(() => {
-    socket?.on('joined-room', ({roomID, name}) => {
-      console.log(name + ', ' + roomID + ' Odasina girdin');
-      navigate(`/room/${roomID}`);
-    });
-
     socket?.on('room-not-found', (roomID, name) => {
       toast.error('Room not found');
     });
@@ -33,7 +29,7 @@ function JoinRoomForm() {
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-    setPlayer({...player, name: e.target.value});
+    //setPlayer({...player, name: e.target.value});
   };
 
   const handleValidation = () => {
@@ -54,7 +50,13 @@ function JoinRoomForm() {
   const handleSubmitJoin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (handleValidation()) {
-      socket?.emit('join-room', {roomID, name});
+      const playerData: Player = {
+        name,
+        champion: 'Zed',
+      };
+
+      socket?.emit('join-room', {roomID, playerData});
+      navigate(`/room/${roomID}`);
     } else {
       toast.error(validationError);
     }

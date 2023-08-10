@@ -16,5 +16,9 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts", "src/services/socket.tsx"]
+  "include": [
+    "src/**/*.ts",
+    "src/services/socket.tsx",
+    "src/interfaces/roomInterfaces.tsx"
+  ]
 }

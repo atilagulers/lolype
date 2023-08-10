@@ -7,16 +7,7 @@ import React, {
 } from 'react';
 import {io, Socket} from 'socket.io-client';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
-
-interface Player {
-  //id: string;
-  name: string;
-}
-
-interface Room {
-  id: string;
-  players: Player[];
-}
+import {Player, Room} from '../interfaces/roomInterfaces';
 
 interface AppContextType {
   socket: Socket | null;

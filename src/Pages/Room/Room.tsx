@@ -3,33 +3,35 @@ import {useParams} from 'react-router-dom';
 import {useAppContext} from '../../contexts/AppContext';
 import {useNavigate} from 'react-router-dom';
 import {Col, Row} from 'react-bootstrap';
+import {Room as RoomType} from '../../interfaces/roomInterfaces';
 
 function Room() {
-  const {socket, player} = useAppContext();
-  const [otherPlayer, setOtherPlayer] = useState<string>('');
+  const {socket, setRoom, room} = useAppContext();
   const navigate = useNavigate();
-  const {id: roomId} = useParams();
-  useEffect(() => {
-    console.log('registered');
+  const {id: roomID} = useParams();
 
-    socket?.on('joined-room', ({roomID, name}) => {
-      setOtherPlayer(name);
-      console.log(name + ', ' + roomID + ' Odasina Girdi');
+  useEffect(() => {
+    socket?.on('joined-room', (roomData: RoomType) => {
+      setRoom(roomData);
+    });
+
+    socket?.on('room-full', ({roomID, name}) => {
+      console.log('ROOM IS FULL');
     });
 
     return () => {
       //socket?.disconnect();
     };
-  }, [socket]);
+  }, [socket, setRoom]);
 
   return (
     <Row>
-      <h1>Room ID: {roomId}</h1>
+      <h1>Room ID: {roomID}</h1>
       <Col>
-        <h1>Player 1: {player?.name}</h1>
+        <h1>You: {room?.hostPlayer?.name}</h1>
       </Col>
       <Col>
-        <h1>Player 2: {otherPlayer}</h1>
+        <h1>Other Player: {room?.otherPlayer?.name}</h1>
       </Col>
     </Row>
   );
