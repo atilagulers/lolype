@@ -23,7 +23,7 @@ function JoinRoomForm() {
     });
 
     return () => {
-      socket?.disconnect();
+      //socket?.disconnect();
     };
   }, [socket]);
 

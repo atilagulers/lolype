@@ -15,7 +15,7 @@ function CreateRoomForm() {
     });
 
     return () => {
-      socket?.disconnect();
+      //socket?.disconnect();
     };
   }, []);
 

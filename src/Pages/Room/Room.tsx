@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {useAppContext} from '../../contexts/AppContext';
 import {useNavigate} from 'react-router-dom';
@@ -6,13 +6,14 @@ import {Col, Row} from 'react-bootstrap';
 
 function Room() {
   const {socket, player} = useAppContext();
+  const [otherPlayer, setOtherPlayer] = useState<string>('');
   const navigate = useNavigate();
   const {id: roomId} = useParams();
-
   useEffect(() => {
-    console.log('Room: Event handler registered');
+    console.log('registered');
+
     socket?.on('joined-room', ({roomID, name}) => {
-      console.log('Room: joined-room event received');
+      setOtherPlayer(name);
       console.log(name + ', ' + roomID + ' Odasina Girdi');
     });
 
@@ -28,7 +29,7 @@ function Room() {
         <h1>Player 1: {player?.name}</h1>
       </Col>
       <Col>
-        <h1>Player 2:</h1>
+        <h1>Player 2: {otherPlayer}</h1>
       </Col>
     </Row>
   );
