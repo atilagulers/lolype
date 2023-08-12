@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import {useAppContext} from '../../contexts/AppContext';
-import {useNavigate} from 'react-router-dom';
 import {Col, Row} from 'react-bootstrap';
-import {Room as RoomType} from '../../interfaces/roomInterfaces';
 import {toast} from 'react-toastify';
+import {Player, Room as RoomType} from '../../interfaces/interfaces';
 
 function Room() {
   const {socket, setRoom, room} = useAppContext();
   const navigate = useNavigate();
   const {id: roomID} = useParams();
 
+  const [you, setYou] = useState<Player | undefined>(undefined);
+
   useEffect(() => {
-    socket?.on('joined-room', (roomData: RoomType) => {
-      setRoom(roomData);
+    socket?.on('room-updated', (updatedRoom: RoomType) => {
+      setRoom(updatedRoom);
     });
 
     socket?.on('room-full', () => {
@@ -21,21 +22,31 @@ function Room() {
       navigate('/room/join');
     });
 
+    if (!room) {
+      navigate('/room/join');
+    } else {
+      const playerYou = room.players.find(
+        (player) => player.socketId === socket?.id
+      );
+      setYou(playerYou);
+    }
+
     return () => {
       //socket?.disconnect();
     };
-  }, [socket, setRoom]);
+  }, [socket, setRoom, navigate, room]);
 
   return (
     <Row>
       <h1>Room ID: {roomID}</h1>
       <Col>
-        <h1>You: {room?.hostPlayer?.name}</h1>
-        <h1>Champion: {room?.hostPlayer?.champion}</h1>
+        <h1>You: {you?.name}</h1>
       </Col>
       <Col>
-        <h1>Other Player: {room?.otherPlayer?.name}</h1>
-        <h1>Champion: {room?.otherPlayer?.champion}</h1>
+        <h1>
+          Other Player:{' '}
+          {room?.players.find((player) => player.socketId !== socket?.id)?.name}
+        </h1>
       </Col>
     </Row>
   );

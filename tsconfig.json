@@ -19,6 +19,6 @@
   "include": [
     "src/**/*.ts",
     "src/services/socket.tsx",
-    "src/interfaces/roomInterfaces.tsx"
+    "src/interfaces/interfaces.tsx"
   ]
 }
