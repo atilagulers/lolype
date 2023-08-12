@@ -1,0 +1,46 @@
+@import '../../scss/colors.scss';
+
+.player-card-container {
+  padding: 12px 24px;
+
+  position: relative;
+  height: 400px;
+  //width: 250px;
+  background-color: $color-blue-5;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%);
+}
+
+.player-name-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+}
+
+.player-name-container label {
+  font-weight: bold;
+}
+
+.btn-check {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.btn-check:checked + .btn {
+  background-color: $color-blue-2;
+  color: black !important;
+  box-shadow: 0 0 10px $color-blue-2;
+}
+
+.btn-check:not(:checked) + .btn {
+  color: $color-red-2;
+  border-color: $color-red-2;
+  box-shadow: 0 0 10px $color-red-2;
+}
+
+.ready-toggle {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+}

@@ -1,11 +1,12 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {useAppContext} from '../../contexts/AppContext';
-import {Button, Col, Row, Form, ToggleButton} from 'react-bootstrap';
+import {Col, Row} from 'react-bootstrap';
 import {toast} from 'react-toastify';
-import {Player, Room as RoomType} from '../../interfaces/interfaces';
+import {Room as RoomType} from '../../interfaces/interfaces';
 import './Room.scss';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import PlayerCard from '../../components/PlayerCard/PlayerCard';
 
 function Room() {
   const {socket, setRoom, room} = useAppContext();
@@ -63,33 +64,17 @@ function Room() {
   return (
     <Row>
       <Row className="mb-5">
-        <h1>Room ID: {roomID}</h1>
-        <Col>
-          <h1>You: {youPlayer?.name}</h1>
-          <ToggleButton
-            className="mb-2"
-            id="your-checkbox"
-            type="checkbox"
-            variant="outline-primary"
-            checked={youPlayer?.isReady || false}
-            onChange={handleChangeReady}
-          >
-            Ready
-          </ToggleButton>
-        </Col>
+        <h1 className="mb-5">Room ID: {roomID}</h1>
 
         <Col>
-          <h1>Other Player: {otherPlayer?.name}</h1>
-          <ToggleButton
-            className="mb-2"
-            id="other-player-checkbox"
-            type="checkbox"
-            variant="outline-primary"
-            checked={otherPlayer?.isReady || false}
-          >
-            Ready
-          </ToggleButton>
+          {youPlayer && (
+            <PlayerCard
+              player={youPlayer}
+              handleChangeReady={handleChangeReady}
+            />
+          )}
         </Col>
+        <Col>{otherPlayer && <PlayerCard player={otherPlayer} />}</Col>
       </Row>
     </Row>
   );
