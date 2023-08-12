@@ -7,6 +7,7 @@ export interface Champion {
 export interface Player {
   socketId: string | undefined;
   isHost: boolean;
+  isReady: boolean;
   name: string;
   champion: Champion | null;
 }

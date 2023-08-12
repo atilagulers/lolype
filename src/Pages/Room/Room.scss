@@ -1,0 +1,13 @@
+@import '../../scss/colors.scss';
+
+.btn-check:checked + .btn {
+  background-color: $color-blue-2;
+  color: black !important;
+  box-shadow: 0 0 10px $color-blue-2;
+}
+
+.btn-check:not(:checked) + .btn {
+  color: $color-red-2;
+  border-color: $color-red-2;
+  box-shadow: 0 0 10px $color-red-2;
+}

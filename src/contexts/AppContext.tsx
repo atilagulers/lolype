@@ -45,7 +45,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({
     setSocket(newSocket);
 
     return () => {
-      newSocket.disconnect();
+      //newSocket.disconnect();
     };
   }, []);
 

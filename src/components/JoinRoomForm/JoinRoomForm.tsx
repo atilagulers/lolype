@@ -64,6 +64,7 @@ function JoinRoomForm() {
       const player: Player = {
         socketId: socket?.id,
         isHost: true,
+        isReady: false,
         name,
         champion: null,
       };
