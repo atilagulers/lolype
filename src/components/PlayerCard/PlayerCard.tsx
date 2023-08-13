@@ -13,10 +13,10 @@ function PlayerCard({player, handleChangeReady}: PlayerCardProps) {
     <Container className="player-card-container">
       <Row>
         <Col xs="2" lg="1" className="m-0 p-0">
-          <Image className="avatar" src="/avatar.png" roundedCircle />
+          <Image className="avatar" src="/champion.webp" rounded />
         </Col>
         <Col className="champion-name-container">
-          <label>Katarina</label>
+          <label>Aatrox</label>
         </Col>
         <Col>
           <ToggleButton
