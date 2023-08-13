@@ -9,15 +9,19 @@
 }
 
 .champion-search-input {
-  padding: 12px !important;
+  padding: 8px !important;
   font-size: medium !important;
   background-color: $color-hextech-black;
-  border-color: $color-gold-2;
-  color: $color-gold-1 !important;
+  border-color: $color-blue-4;
+  color: $color-blue-1 !important;
 }
 
 .champion-search-input:focus {
   background-color: $color-hextech-black;
-  border-color: $color-gold-1;
-  box-shadow: 0 0 10px 0px $color-gold-2;
+  border-color: $color-blue-4;
+  box-shadow: 0 0 10px 0px $color-blue-4;
+}
+
+.champion-search-input::placeholder {
+  color: $color-blue-4 !important;
 }
