@@ -1,11 +1,12 @@
 @import '../../scss/colors.scss';
 
 .player-card-container {
+  margin: 0;
   padding: 12px 24px;
-
   position: relative;
-  height: 400px;
-  //width: 250px;
+
+  height: 600px;
+  width: 250px;
   background-color: $color-blue-5;
   clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%);
 }

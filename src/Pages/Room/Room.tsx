@@ -66,7 +66,7 @@ function Room() {
       <Row className="mb-5">
         <h1 className="mb-5">Room ID: {roomID}</h1>
 
-        <Col>
+        <Col className="player-container">
           {youPlayer && (
             <PlayerCard
               player={youPlayer}
@@ -74,7 +74,10 @@ function Room() {
             />
           )}
         </Col>
-        <Col>{otherPlayer && <PlayerCard player={otherPlayer} />}</Col>
+
+        <Col className="player-container">
+          {otherPlayer && <PlayerCard player={otherPlayer} />}
+        </Col>
       </Row>
     </Row>
   );
