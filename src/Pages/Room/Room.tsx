@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {useAppContext} from '../../contexts/AppContext';
-import {Col, Row} from 'react-bootstrap';
+import {Container, Row} from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import {Room as RoomType} from '../../interfaces/interfaces';
 import './Room.scss';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import PlayerCard from '../../components/PlayerCard/PlayerCard';
+import ChampionSelection from '../../components/ChampionSelection/ChampionSelection';
 
 function Room() {
   const {socket, setRoom, room} = useAppContext();
@@ -62,22 +63,29 @@ function Room() {
   );
 
   return (
-    <Row>
+    <Row className="room-container">
       <Row className="mb-5">
-        <h1 className="mb-5">Room ID: {roomID}</h1>
+        <Row>
+          <h1 className="mb-5">Room ID: {roomID}</h1>
+        </Row>
 
-        <Col className="player-container">
+        <Row>{otherPlayer && <PlayerCard player={otherPlayer} />}</Row>
+
+        <Row>
+          <h1>VS</h1>
+        </Row>
+
+        <Row>
           {youPlayer && (
             <PlayerCard
               player={youPlayer}
               handleChangeReady={handleChangeReady}
             />
           )}
-        </Col>
-
-        <Col className="player-container">
-          {otherPlayer && <PlayerCard player={otherPlayer} />}
-        </Col>
+        </Row>
+      </Row>
+      <Row>
+        <ChampionSelection />
       </Row>
     </Row>
   );
