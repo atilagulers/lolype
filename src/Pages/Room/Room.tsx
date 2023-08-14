@@ -26,7 +26,7 @@ function Room() {
 
     socket?.on('room-updated', (updatedRoom: RoomType) => {
       setRoom(updatedRoom);
-
+      console.log(updatedRoom.countdown);
       const allPlayersReady = updatedRoom.players.every(
         (player) => player.isReady
       );
@@ -39,6 +39,8 @@ function Room() {
       ) {
         room.gameState = GameState.ChampionSelection;
         socket?.emit('update-room', room);
+
+        socket?.emit('start-countdown', roomID);
       }
     });
 
@@ -93,7 +95,7 @@ function Room() {
         <Row>{otherPlayer && <PlayerCard player={otherPlayer} />}</Row>
 
         <Row>
-          <h1>VS</h1>
+          <h1>VS {room?.countdown}</h1>
         </Row>
 
         <Row>

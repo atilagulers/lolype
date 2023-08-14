@@ -16,4 +16,5 @@ export interface Room {
   id: string;
   players: Player[];
   gameState: GameState;
+  countdown: number;
 }
