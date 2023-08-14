@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {useAppContext} from '../../contexts/AppContext';
 import {Container, Row} from 'react-bootstrap';
@@ -8,15 +8,38 @@ import './Room.scss';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import PlayerCard from '../../components/PlayerCard/PlayerCard';
 import ChampionSelection from '../../components/ChampionSelection/ChampionSelection';
+import {Player} from '../../interfaces/interfaces';
+import {GameState} from '../../interfaces/enums';
 
 function Room() {
   const {socket, setRoom, room} = useAppContext();
   const navigate = useNavigate();
   const {id: roomID} = useParams();
+  const [youPlayer, setYouPlayer] = useState<Player>();
+  const [otherPlayer, setOtherPlayer] = useState<Player>();
 
   useEffect(() => {
+    room?.players.forEach((player) => {
+      if (player.socketId === socket?.id) setYouPlayer(player);
+      else setOtherPlayer(player);
+    });
+
     socket?.on('room-updated', (updatedRoom: RoomType) => {
       setRoom(updatedRoom);
+
+      const allPlayersReady = updatedRoom.players.every(
+        (player) => player.isReady
+      );
+
+      if (
+        allPlayersReady &&
+        room &&
+        room.gameState !== undefined &&
+        room.gameState === GameState.Waiting
+      ) {
+        room.gameState = GameState.ChampionSelection;
+        socket?.emit('update-room', room);
+      }
     });
 
     socket?.on('room-full', () => {
@@ -29,7 +52,8 @@ function Room() {
     }
 
     return () => {
-      //socket?.disconnect();
+      socket?.off('room-updated');
+      socket?.off('room-full');
     };
   }, [socket, setRoom, navigate, room]);
 
@@ -39,28 +63,25 @@ function Room() {
       return;
     }
 
-    const updatedRoom: RoomType = {...room};
-    const youPlayerIndex = updatedRoom.players?.findIndex(
-      (player) => player.socketId === socket?.id
+    const yourPlayerIndex = room.players.findIndex(
+      (player) => player.socketId === youPlayer?.socketId
     );
 
-    if (youPlayerIndex !== -1) {
-      updatedRoom.players[youPlayerIndex].isReady =
-        !updatedRoom.players[youPlayerIndex].isReady;
-      socket?.emit('update-room', updatedRoom);
+    if (yourPlayerIndex !== -1) {
+      room.players[yourPlayerIndex].isReady =
+        !room.players[yourPlayerIndex].isReady;
+
+      socket?.emit('update-room', room);
+    } else {
+      console.log('Player not found');
     }
+
+    socket?.emit('update-room', room);
   };
 
   if (!room) {
     return <LoadingSpinner />;
   }
-
-  const youPlayer = room.players.find(
-    (player) => player.socketId === socket?.id
-  );
-  const otherPlayer = room.players.find(
-    (player) => player.socketId !== socket?.id
-  );
 
   return (
     <Row className="room-container">
@@ -85,7 +106,9 @@ function Room() {
         </Row>
       </Row>
       <Row>
-        <ChampionSelection />
+        {room.gameState === GameState.ChampionSelection && (
+          <ChampionSelection />
+        )}
       </Row>
     </Row>
   );

@@ -30,7 +30,9 @@ function JoinRoomForm() {
     });
 
     return () => {
-      //socket?.disconnect();
+      socket?.off('joined-room');
+      socket?.off('room-full');
+      socket?.off('room-not-found');
     };
   }, [socket, setRoom, navigate]);
 

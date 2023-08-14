@@ -1,5 +1,12 @@
 import React from 'react';
-import {Container, ToggleButton, Col, Image, Row} from 'react-bootstrap';
+import {
+  Container,
+  ToggleButton,
+  Col,
+  Image,
+  Row,
+  ProgressBar,
+} from 'react-bootstrap';
 import {Player} from '../../interfaces/interfaces';
 import './PlayerCard.scss';
 import SkillBar from '../SkillBar/SkillBar';
@@ -12,7 +19,7 @@ interface PlayerCardProps {
 function PlayerCard({player, handleChangeReady}: PlayerCardProps) {
   return (
     <Container className="player-card-container">
-      <Row className="mb-5">
+      <Row className="">
         <Col xs="2" lg="1" className="m-0 p-0">
           <Image className="selected-champion" src="/champion.webp" rounded />
         </Col>
@@ -21,13 +28,29 @@ function PlayerCard({player, handleChangeReady}: PlayerCardProps) {
             <label id="name">{player?.name}</label>
           </Row>
           <Row className="champion-name-container">
-            <label>Aatrox</label>
+            <label>{player.champion?.name}</label>
           </Row>
         </Col>
-        <Col lg="4">
-          <SkillBar />
-        </Col>
-        <Col>Stats</Col>
+        {player.champion && (
+          <Col lg="4" className="me-5">
+            <SkillBar />
+            <ProgressBar className="health-bar" now={75} label={`${75}%`} />
+            <ProgressBar className="source-bar" now={45} label={`${45}%`} />
+          </Col>
+        )}
+
+        {player.champion && (
+          <Col lg="2">
+            <Row className="mb-3">
+              <Col>AD: 30</Col>
+              <Col>AP: 78</Col>
+            </Row>
+            <Row className="mb-3">
+              <Col>DP: 30</Col>
+              <Col>MR: 78</Col>
+            </Row>
+          </Col>
+        )}
       </Row>
       <Row>
         <ToggleButton

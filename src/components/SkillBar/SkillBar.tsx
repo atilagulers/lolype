@@ -4,7 +4,7 @@ import './SkillBar.scss';
 
 function SkillBar() {
   return (
-    <Row className="skills-container">
+    <Row className="skills-container mb-5">
       <Col className="skill-column">
         <Image
           className="skill-image"

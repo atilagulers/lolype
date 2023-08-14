@@ -56,17 +56,17 @@
 
 .btn-check:checked + .btn {
   background-image: linear-gradient(
-    $color-gold-2,
+    $color-green-1,
     70%,
-    $color-gold-3
+    $color-green-5
   ) !important;
-  color: black !important;
-  box-shadow: 0 0 8px 0px $color-gold-2;
+  color: $color-hextech-black !important;
+  //box-shadow: 0 0 10px 0 $color-green-3;
 }
 
 .btn-check:not(:checked) + .btn {
-  //background-image: linear-gradient($color-gold-4, $color-gold-7) !important;
-  border: 1px solid $color-gold-2;
+  //background-image: linear-gradient($color-red-4, $color-red-7) !important;
+  border: 1px solid $color-red-2;
   color: $color-gold-1;
 }
 
@@ -78,4 +78,24 @@
   //bottom: 0%;
   //left: 1%;
   //transform: translateX(0%);
+}
+
+.health-bar {
+  margin-bottom: 24px;
+  height: 30px;
+  background-color: $color-hextech-black;
+  //border: 1px solid white !important;
+}
+
+.health-bar .progress-bar {
+  background-image: linear-gradient($color-green-2, $color-green-7);
+}
+
+.source-bar {
+  height: 30px;
+  background-color: $color-hextech-black;
+}
+
+.source-bar .progress-bar {
+  background-image: linear-gradient(dodgerblue, blue);
 }
