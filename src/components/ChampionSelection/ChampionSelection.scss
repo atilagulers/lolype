@@ -1,5 +1,9 @@
 @import '../../scss/colors.scss';
 
+.champion-container {
+  max-width: 120px;
+}
+
 .champion {
   min-width: 120px;
   max-width: 100%;

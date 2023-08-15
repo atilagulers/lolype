@@ -41,7 +41,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({
   const [room, setRoom] = useState<Room | null>(null);
 
   useEffect(() => {
-    const newSocket = io(process.env.REACT_APP_API_URL!);
+    const newSocket = io(process.env.REACT_APP_BASE_URL!);
+
     setSocket(newSocket);
 
     return () => {

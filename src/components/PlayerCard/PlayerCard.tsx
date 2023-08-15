@@ -15,13 +15,16 @@ interface PlayerCardProps {
   player: Player;
   handleChangeReady?: () => void;
 }
-
 function PlayerCard({player, handleChangeReady}: PlayerCardProps) {
   return (
     <Container className="player-card-container">
       <Row className="">
         <Col xs="2" lg="1" className="m-0 p-0">
-          <Image className="selected-champion" src="/champion.webp" rounded />
+          <Image
+            className="selected-champion"
+            src={`/champions/${player.champion?.name}/avatar.webp`}
+            rounded
+          />
         </Col>
         <Col xs="2" lg="2" className="">
           <Row className="player-name-container">
@@ -38,7 +41,6 @@ function PlayerCard({player, handleChangeReady}: PlayerCardProps) {
             <ProgressBar className="source-bar" now={45} label={`${45}%`} />
           </Col>
         )}
-
         {player.champion && (
           <Col lg="2">
             <Row className="mb-3">

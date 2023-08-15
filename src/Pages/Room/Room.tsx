@@ -108,8 +108,9 @@ function Room() {
         </Row>
       </Row>
       <Row>
+        <ChampionSelection player={youPlayer} setPlayer={setYouPlayer} />
         {room.gameState === GameState.ChampionSelection && (
-          <ChampionSelection />
+          <ChampionSelection player={youPlayer} setPlayer={setYouPlayer} />
         )}
       </Row>
     </Row>
