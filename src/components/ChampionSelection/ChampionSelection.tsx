@@ -4,6 +4,7 @@ import './ChampionSelection.scss';
 import {Player, Champion} from '../../interfaces/interfaces';
 import {fetchAllChampions} from '../../services/api';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import {useAppContext} from '../../contexts/AppContext';
 
 interface ChampionSelectionProps {
   player: Player | undefined;
@@ -11,6 +12,7 @@ interface ChampionSelectionProps {
 }
 
 function ChampionSelection({player, setPlayer}: ChampionSelectionProps) {
+  const {socket, room} = useAppContext();
   const [champions, setChampions] = useState<Champion[]>([]);
 
   useEffect(() => {
@@ -29,8 +31,11 @@ function ChampionSelection({player, setPlayer}: ChampionSelectionProps) {
   const championImages = Array(10).fill('/champion.webp');
 
   const handleSelectChampion = (selectedChampion: Champion) => {
-    if (player) {
-      setPlayer({...player, champion: selectedChampion});
+    if (player && socket) {
+      const updatedPlayer = {...player, champion: selectedChampion};
+      setPlayer(updatedPlayer);
+
+      socket.emit('update-player', {roomID: room?.id, player: updatedPlayer});
     }
   };
 

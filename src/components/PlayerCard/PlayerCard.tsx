@@ -14,17 +14,30 @@ import SkillBar from '../SkillBar/SkillBar';
 interface PlayerCardProps {
   player: Player;
   handleChangeReady?: () => void;
+  showReadyBtn: boolean;
 }
-function PlayerCard({player, handleChangeReady}: PlayerCardProps) {
+function PlayerCard({
+  player,
+  handleChangeReady,
+  showReadyBtn,
+}: PlayerCardProps) {
   return (
     <Container className="player-card-container">
       <Row className="">
-        <Col xs="2" lg="1" className="m-0 p-0">
-          <Image
-            className="selected-champion"
-            src={`/champions/${player.champion?.name}/avatar.webp`}
-            rounded
-          />
+        <Col xs="2" lg="1" className="selected-champion-container mb-3 p-0">
+          {player.champion ? (
+            <Image
+              className="selected-champion"
+              src={`/champions/${player.champion.name}/avatar.webp`}
+              rounded
+            />
+          ) : (
+            <Image
+              className="selected-champion"
+              src="/black-square.webp"
+              rounded
+            />
+          )}
         </Col>
         <Col xs="2" lg="2" className="">
           <Row className="player-name-container">
@@ -55,17 +68,19 @@ function PlayerCard({player, handleChangeReady}: PlayerCardProps) {
         )}
       </Row>
       <Row>
-        <ToggleButton
-          className="ready-toggle"
-          id={`${player.name}-${player.isHost}`}
-          type="checkbox"
-          value="1"
-          variant=""
-          checked={player?.isReady || false}
-          onChange={handleChangeReady}
-        >
-          Ready
-        </ToggleButton>
+        {showReadyBtn && (
+          <ToggleButton
+            className="ready-toggle"
+            id={`${player.name}-${player.isHost}`}
+            type="checkbox"
+            value="1"
+            variant=""
+            checked={player?.isReady || false}
+            onChange={handleChangeReady}
+          >
+            Ready
+          </ToggleButton>
+        )}
       </Row>
     </Container>
   );

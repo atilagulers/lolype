@@ -26,7 +26,7 @@ function Room() {
 
     socket?.on('room-updated', (updatedRoom: RoomType) => {
       setRoom(updatedRoom);
-      console.log(updatedRoom.countdown);
+
       const allPlayersReady = updatedRoom.players.every(
         (player) => player.isReady
       );
@@ -92,7 +92,14 @@ function Room() {
           <h1 className="mb-5">Room ID: {roomID}</h1>
         </Row>
 
-        <Row>{otherPlayer && <PlayerCard player={otherPlayer} />}</Row>
+        <Row>
+          {otherPlayer && (
+            <PlayerCard
+              player={otherPlayer}
+              showReadyBtn={room.gameState === GameState.Waiting}
+            />
+          )}
+        </Row>
 
         <Row>
           <h1>VS {room?.countdown}</h1>
@@ -103,12 +110,13 @@ function Room() {
             <PlayerCard
               player={youPlayer}
               handleChangeReady={handleChangeReady}
+              showReadyBtn={room.gameState === GameState.Waiting}
             />
           )}
         </Row>
       </Row>
       <Row>
-        <ChampionSelection player={youPlayer} setPlayer={setYouPlayer} />
+        {/*<ChampionSelection player={youPlayer} setPlayer={setYouPlayer} />*/}
         {room.gameState === GameState.ChampionSelection && (
           <ChampionSelection player={youPlayer} setPlayer={setYouPlayer} />
         )}
