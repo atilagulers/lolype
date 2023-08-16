@@ -98,6 +98,10 @@
   background-color: $color-hextech-black;
 }
 
-.source-bar .progress-bar {
+.source-bar-blue .progress-bar {
   background-image: linear-gradient(dodgerblue, blue);
+}
+
+.source-bar-yellow .progress-bar {
+  background-image: linear-gradient($color-gold-3, $color-gold-6);
 }

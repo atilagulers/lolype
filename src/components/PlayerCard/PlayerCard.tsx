@@ -7,9 +7,10 @@ import {
   Row,
   ProgressBar,
 } from 'react-bootstrap';
-import {Player} from '../../interfaces/interfaces';
+import {Player, SourceType} from '../../interfaces/interfaces';
 import './PlayerCard.scss';
 import SkillBar from '../SkillBar/SkillBar';
+import ChampionStats from '../ChampionStats/ChampionStats';
 
 interface PlayerCardProps {
   player: Player;
@@ -21,6 +22,17 @@ function PlayerCard({
   handleChangeReady,
   showReadyBtn,
 }: PlayerCardProps) {
+  const getSourceBarColor = function () {
+    switch (player.champion?.sourceType) {
+      case 'Mana':
+        return 'blue';
+      case 'Energy':
+        return 'yellow';
+      default:
+        return 'Mana';
+    }
+  };
+
   return (
     <Container className="player-card-container">
       <Row className="">
@@ -49,23 +61,20 @@ function PlayerCard({
         </Col>
         {player.champion && (
           <Col lg="4" className="me-5">
-            <SkillBar />
-            <ProgressBar className="health-bar" now={75} label={`${75}%`} />
-            <ProgressBar className="source-bar" now={45} label={`${45}%`} />
+            <SkillBar champion={player.champion} />
+            <ProgressBar
+              className="health-bar"
+              now={player.champion.currentHealth}
+              label={`${player.champion.currentHealth} / ${player.champion.maxHealth}`}
+            />
+            <ProgressBar
+              className={`source-bar source-bar-${getSourceBarColor()}`}
+              now={player.champion.currentSource}
+              label={`${player.champion.currentSource} / ${player.champion.maxSource}`}
+            />
           </Col>
         )}
-        {player.champion && (
-          <Col lg="2">
-            <Row className="mb-3">
-              <Col>AD: 30</Col>
-              <Col>AP: 78</Col>
-            </Row>
-            <Row className="mb-3">
-              <Col>DP: 30</Col>
-              <Col>MR: 78</Col>
-            </Row>
-          </Col>
-        )}
+        {player.champion && <ChampionStats champion={player.champion} />}
       </Row>
       <Row>
         {showReadyBtn && (
