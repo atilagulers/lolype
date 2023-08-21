@@ -1,1 +1,4 @@
-![giphy](https://github.com/atilagulers/lolype/assets/128936466/9195ad31-6f68-4f68-a2ee-3b6cc1fb6d46)
+# lolype-api
+
+
+[![Video](https://i9.ytimg.com/vi/MR3IRCHbWPw/mq3.jpg?sqp=CIzIjKcG-oaymwEmCMACELQB8quKqQMa8AEB-AHUBoACtgOKAgwIABABGE8gWChlMA8%3D&rs=AOn4CLBZEfS_eZwablXBXhKAXEjCGXQo4g&retry=4)](https://youtu.be/MR3IRCHbWPw)
